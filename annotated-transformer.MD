@@ -166,7 +166,7 @@ class Generator(nn.Module):
 
 Transformer следует этой общей архитектуре, используя стек самовнимания и поточечные полносвязные слои как для кодера, так и для декодера, показанные соответственно в левой и правой половинах Рисунка 1.
 <p align="center">
-  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_14_0.png" width="500" alt="Описание картинки">
+  <img src="https://media.geeksforgeeks.org/wp-content/uploads/20251004125140134507/transformers.webp" width="500" alt="Описание картинки">
 </p>
 
 ## Стек кодера и декодера
