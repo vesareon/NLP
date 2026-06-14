@@ -350,7 +350,7 @@ show_example(example_mask)
 Мы называем наше конкретное внимание «масштабированным скалярным произведением внимания» (Scaled Dot-Product Attention). Вход состоит из запросов и ключей размерности $d_k$ и значений размерности $d_v$. Мы вычисляем скалярные произведения запроса со всеми ключами, делим каждое на $\sqrt{d_k}$ и применяем функцию softmax для получения весов значений.
 
 <p align="center">
-  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_33_0.png" width="200" alt="Описание картинки">
+  <img src="https://pub.mdpi-res.com/sensors/sensors-22-04639/article_deploy/html/images/sensors-22-04639-g001-550.jpg?1655711832" width="100" alt="Описание картинки">
 </p>
 
 
