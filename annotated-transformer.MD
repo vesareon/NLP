@@ -339,7 +339,7 @@ def example_mask():
 show_example(example_mask)
 ```
 <p align="center">
-  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_31_0.png" width="200" alt="Описание картинки">
+  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_31_0.png" width="300" alt="Описание картинки">
 </p>
 
 
@@ -380,7 +380,7 @@ def attention(query, key, value, mask=None, dropout=None):
 В то время как для малых значений $d_k$ оба механизма работают одинаково, аддитивное внимание превосходит внимание через скалярное произведение без масштабирования для больших значений $d_k$ [(ссылка)](https://arxiv.org/abs/1703.03906). Мы подозреваем, что для больших значений $d_k$ скалярные произведения становятся большими по величине, что приводит softmax в области с чрезвычайно малыми градиентами (Чтобы проиллюстрировать, почему скалярные произведения становятся большими, предположим, что компоненты q и k являются независимыми случайными величинами со средним 0 и дисперсией 1. Тогда их скалярное произведение, q $\cdot$ k = $\sum_{i=1}^{d_k}$ q_ik_i, имеет среднее 0 и дисперсию $d_k$.). Чтобы противодействовать этому эффекту, мы масштабируем скалярные произведения на $\frac{1}{\sqrt{d_k}}$.
 
 <p align="center">
-  <img src="https://i.pinimg.com/736x/f4/61/65/f4616545a4beab3e8230766e2127d271.jpg" width="800" alt="Описание картинки">
+  <img src="https://i.pinimg.com/736x/f4/61/65/f4616545a4beab3e8230766e2127d271.jpg" width="700" alt="Описание картинки">
 </p>
 
 
@@ -843,7 +843,7 @@ example_learning_schedule()
 ```
 
 <p align="center">
-  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_69_0.png" width="800" alt="Описание картинки">
+  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_69_0.png" width="600" alt="Описание картинки">
 </p>
 
 ## Регуляризация
