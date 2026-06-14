@@ -339,7 +339,7 @@ def example_mask():
 show_example(example_mask)
 ```
 <p align="center">
-  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_31_0.png" width="300" alt="Описание картинки">
+  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_31_0.png" width="400" alt="Описание картинки">
 </p>
 
 
@@ -565,7 +565,7 @@ show_example(example_positional)
 ```
 
 <p align="center">
-  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_49_0.png" width="800" alt="Описание картинки">
+  <img src="https://nlp.seas.harvard.edu/images/the-annotated-transformer_49_0.png" width="900" alt="Описание картинки">
 </p>
 
 Мы также экспериментировали с использованием изучаемых позиционных векторных представлений [(ссылка)](https://arxiv.org/pdf/1705.03122.pdf) и обнаружили, что две версии дают почти идентичные результаты. Мы выбрали синусоидальную версию, потому что она может позволить модели экстраполировать на длины последовательностей, превышающие те, что встречались во время обучения.
