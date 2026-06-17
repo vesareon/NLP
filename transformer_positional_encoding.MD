@@ -60,14 +60,23 @@
 
 Пусть $t$ — желаемая позиция во входном предложении, $\vec{p_t} \in \mathbb{R}^d$ — соответствующее кодирование, а $d$ — размерность кодирования (где $d \equiv_2 0$). Тогда $f : \mathbb{N} \rightarrow \mathbb{R}^d$ будет функцией, производящей выходной вектор $\vec{p_t}$, и она определяется следующим образом:
 
+$$
+\vec{p_t}^{(i)} = f(t)^{(i)} := \begin{cases} \sin({\omega_k} \cdot t), & \text{если } i = 2k \\ \cos({\omega_k} \cdot t), & \text{если } i = 2k + 1 \end{cases}
+$$
 
 где
 
+$$
+\omega_k = \frac{1}{10000^{2k / d}}
+$$
 
 Как видно из определения функции, частоты уменьшаются вдоль размерности вектора. Таким образом, длины волн образуют геометрическую прогрессию от $2\pi$ до $10000 \cdot 2\pi$.
 
 Вы также можете представить позиционное кодирование $\vec{p_t}$ как вектор, содержащий пары синусов и косинусов для каждой частоты (обратите внимание, что $d$ делится на 2):
 
+$$
+\vec{p_t} = \begin{bmatrix} \sin({\omega_1} \cdot t)\\ \cos({\omega_1} \cdot t)\\ \\ \sin({\omega_2} \cdot t)\\ \cos({\omega_2} \cdot t)\\ \\ \vdots\\ \\ \sin({\omega_{d/2}} \cdot t)\\ \cos({\omega_{d/2}} \cdot t) \end{bmatrix}_{d \times 1}
+$$
 
 ---
 
@@ -76,17 +85,7 @@
 Вы можете задаться вопросом, как эта комбинация синусов и косинусов может представлять позицию или порядок? На самом деле все довольно просто. Представьте, что вы хотите представить число в двоичном формате:
 
 $$
-\begin{array}{c|c|c|c}
-\text{Dec} & \text{Bin} & \text{Dec} & \text{Bin} \\ \hline
-0 & 0000 & 8  & 1000 \\
-1 & 0001 & 9  & 1001 \\
-2 & 0010 & 10 & 1010 \\
-3 & 0011 & 11 & 1011 \\
-4 & 0100 & 12 & 1100 \\
-5 & 0101 & 13 & 1101 \\
-6 & 0110 & 14 & 1110 \\
-7 & 0111 & 15 & 1111
-\end{array}
+\begin{align} 0: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{0}} & & 8: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{0}} \\ 1: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{1}} & & 9: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{1}} \\ 2: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{0}} & & 10: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{0}} \\ 3: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{1}} & & 11: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{0}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{1}} \\ 4: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{0}} & & 12: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{0}} \\ 5: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{1}} & & 13: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{0}} \ \ \color{red}{\texttt{1}} \\ 6: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{0}} & & 14: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{0}} \\ 7: \ \ \ \ \color{orange}{\texttt{0}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{1}} & & 15: \ \ \ \ \color{orange}{\texttt{1}} \ \ \color{green}{\texttt{1}} \ \ \color{blue}{\texttt{1}} \ \ \color{red}{\texttt{1}} \\ \end{align}
 $$
 
 Вы можете заметить разную скорость изменения битов. Младший значащий бит (LSB) меняется на каждом числе, второй — на каждом втором и так далее.
@@ -101,6 +100,9 @@ $$
 
 Ранее в этом посте я упоминал, что позиционные кодирования используются для оснащения входных слов информацией об их положении. Но как это делается? На самом деле, в оригинальной статье позиционное кодирование просто складывается с фактическими эмбеддингами слов. То есть для каждого слова $w_t$ в предложении $[w_1,...w_n]$ вычисление соответствующего эмбеддинга, который подается в модель, выглядит следующим образом:
 
+$$
+\psi^\prime(w_t) = \psi(w_t) + \vec{p_t}
+$$
 
 Чтобы это суммирование было возможным, мы сохраняем размерность позиционного кодирования равной размерности эмбеддингов слов, т.е. $d_\text{word embedding} = d_\text{positional embedding}$.
 
@@ -116,23 +118,41 @@ $$
 
 Для каждой пары синус-косинус, соответствующей частоте $\omega_k$, существует линейное преобразование $M \in \mathbb{R}^{2\times2}$ (не зависящее от $t$), для которого выполняется следующее уравнение:
 
+$$
+M \cdot \begin{bmatrix} \sin(\omega_k \cdot t) \\ \cos(\omega_k \cdot t) \end{bmatrix} = \begin{bmatrix} \sin(\omega_k \cdot (t + \phi)) \\ \cos(\omega_k \cdot (t + \phi)) \end{bmatrix}
+$$
 
 **Доказательство:**
 
 Пусть $M$ — матрица $2 \times 2$, мы хотим найти $u_1, v_1, u_2$ и $v_2$ такие, чтобы:
 
+$$
+\begin{bmatrix} u_1 & v_1 \\ u_2 & v_2 \end{bmatrix} \cdot \begin{bmatrix} \sin(\omega_k \cdot t) \\ \cos(\omega_k \cdot t) \end{bmatrix} = \begin{bmatrix} \sin(\omega_k \cdot (t + \phi)) \\ \cos(\omega_k \cdot (t + \phi)) \end{bmatrix}
+$$
 
 Используя теорему сложения углов, мы можем разложить правую часть следующим образом:
 
+$$
+\begin{bmatrix} u_1 & v_1 \\ u_2 & v_2 \end{bmatrix} \cdot \begin{bmatrix} \sin(\omega_k \cdot t) \\ \cos(\omega_k \cdot t) \end{bmatrix} = \begin{bmatrix} \sin(\omega_k \cdot t)\cos(\omega_k \cdot \phi) + \cos(\omega_k \cdot t)\sin(\omega_k \cdot \phi) \\ \cos(\omega_k \cdot t)\cos(\omega_k \cdot \phi) - \sin(\omega_k \cdot t)\sin(\omega_k \cdot \phi) \end{bmatrix}
+$$
 
 Что приводит к следующим двум уравнениям:
 
+$$
+\begin{align} u_1 \sin(\omega_k \cdot t) + v_1 \cos(\omega_k \cdot t) = & \ \ \cos(\omega_k \cdot \phi)\sin(\omega_k \cdot t) + \sin(\omega_k \cdot \phi)\cos(\omega_k \cdot t) \tag{1}\\ u_2 \sin(\omega_k \cdot t) + v_2 \cos(\omega_k \cdot t) = & -\sin(\omega_k \cdot \phi)\sin(\omega_k \cdot t) + \cos(\omega_k \cdot \phi)\cos(\omega_k \cdot t) \tag{2} \end{align}
+$$
 
 Решая эти уравнения, получаем:
 
+$$
+\begin{align} u_1 = \cos(\omega_k \cdot \phi) & \ \ \ v_1 = \sin(\omega_k \cdot \phi) \\ u_2 = -\sin(\omega_k \cdot \phi) & \ \ \ v_2 = \cos(\omega_k \cdot \phi) \end{align}
+$$
 
 Таким образом, итоговая матрица преобразования $M$:
 
+$$
+M_{\phi,k} = \begin{bmatrix} \cos(\omega_k \cdot \phi) & \sin(\omega_k \cdot \phi) \\ -\sin(\omega_k \cdot \phi) & \cos(\omega_k \cdot \phi) \end{bmatrix}
+$$
 
 Как видите, итоговое преобразование не зависит от $t$. Заметим, что матрица $M$ очень похожа на матрицу поворота.
 
